@@ -1,0 +1,47 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Vaab Tasks</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Fraunces:opsz,wght@9..144,600&family=IBM+Plex+Sans:wght@400;500&display=swap" rel="stylesheet" />
+  <link rel="stylesheet" href="styles.css" />
+</head>
+<body>
+  <main>
+    <header>
+      <p class="brand">Vaab Tasks</p>
+      <h1>A tiny app on first-class Vaab I/O</h1>
+      <p class="lede">Auth, SQLite, env, and outbound HTTP — no package hunt.</p>
+    </header>
+
+    <section class="session">
+      <label>
+        Bearer token
+        <input id="token" type="text" autocomplete="off" spellcheck="false" />
+      </label>
+      <button type="button" id="use-demo">Use demo token</button>
+    </section>
+
+    <section>
+      <form id="create">
+        <label>
+          New task
+          <input id="title" name="title" placeholder="Ship the serve block" required />
+        </label>
+        <button type="submit">Add</button>
+      </form>
+      <ul id="tasks"></ul>
+    </section>
+
+    <section class="aside">
+      <button type="button" id="quote">Fetch a quote via http.get</button>
+      <p id="quote-out" hidden></p>
+      <p id="status" role="status"></p>
+    </section>
+  </main>
+  <script src="app.js"></script>
+</body>
+</html>
