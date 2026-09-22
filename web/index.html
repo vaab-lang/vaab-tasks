@@ -13,9 +13,20 @@
   <main>
     <header>
       <p class="brand">Vaab Tasks</p>
-      <h1>A tiny app on first-class Vaab I/O</h1>
-      <p class="lede">Auth, SQLite, env, and outbound HTTP — no package hunt.</p>
+      <h1>A tiny app on casts and first-class I/O</h1>
+      <p class="lede">Each route is a cast. Shared code lives in local riffs — auth, SQLite, env, no package hunt.</p>
     </header>
+
+    <section class="architecture" aria-label="Backend layout">
+      <h2>Backend layout</h2>
+      <ul class="tree">
+        <li><code>backend/main.vaab</code> — serve + imports</li>
+        <li><code>lib/database/</code> — <code>cast Database</code></li>
+        <li><code>lib/auth/</code> — <code>cast Auth</code></li>
+        <li><code>lib/routes/tasks/</code> — <code>cast TasksRoute</code></li>
+        <li><code>lib/routes/quote/</code> — <code>cast QuoteRoute</code></li>
+      </ul>
+    </section>
 
     <section class="session">
       <label>
@@ -37,8 +48,11 @@
     </section>
 
     <section class="aside">
-      <button type="button" id="quote">Fetch a quote via http.get</button>
-      <p id="quote-out" hidden></p>
+      <div class="quote-actions">
+        <button type="button" id="quote">Pull quote</button>
+        <span id="quote-flight" hidden></span>
+      </div>
+      <ol id="quote-feed" class="quote-feed" hidden></ol>
       <p id="status" role="status"></p>
     </section>
   </main>

@@ -4,9 +4,49 @@ const TOKEN_KEY = "vaab-tasks-token";
 const tokenInput = document.querySelector("#token");
 const tasksEl = document.querySelector("#tasks");
 const statusEl = document.querySelector("#status");
-const quoteOut = document.querySelector("#quote-out");
+const quoteFeed = document.querySelector("#quote-feed");
+const quoteFlight = document.querySelector("#quote-flight");
+let quotesInFlight = 0;
+let quoteSeq = 0;
 
 tokenInput.value = localStorage.getItem(TOKEN_KEY) || "";
+
+function setFlight(delta) {
+  quotesInFlight = Math.max(0, quotesInFlight + delta);
+  if (quotesInFlight === 0) {
+    quoteFlight.hidden = true;
+    quoteFlight.textContent = "";
+    return;
+  }
+  quoteFlight.hidden = false;
+  quoteFlight.textContent = `${quotesInFlight} in flight`;
+}
+
+function pushQuote(quote, elapsedMs) {
+  quoteFeed.hidden = false;
+  const item = document.createElement("li");
+  item.innerHTML = `<strong></strong><span></span>`;
+  item.querySelector("strong").textContent = quote.text;
+  item.querySelector("span").textContent = `${quote.source} · ${elapsedMs}ms`;
+  quoteFeed.prepend(item);
+  while (quoteFeed.children.length > 12) {
+    quoteFeed.lastElementChild.remove();
+  }
+}
+
+document.querySelector("#quote").addEventListener("click", () => {
+  const seq = ++quoteSeq;
+  const t0 = performance.now();
+  setFlight(1);
+  api("/api/quote")
+    .then((quote) => {
+      const elapsed = Math.round(performance.now() - t0);
+      pushQuote(quote, quote.ms ?? elapsed);
+      setStatus(`Quote #${seq} in ${elapsed}ms — spam away.`);
+    })
+    .catch((error) => setStatus(error.message, "error"))
+    .finally(() => setFlight(-1));
+});
 
 function setStatus(message, kind = "info") {
   statusEl.textContent = message;
@@ -90,17 +130,6 @@ document.querySelector("#create").addEventListener("submit", async (event) => {
     await api("/api/tasks", { method: "POST", body: JSON.stringify({ title }) });
     document.querySelector("#title").value = "";
     await refresh();
-  } catch (error) {
-    setStatus(error.message, "error");
-  }
-});
-
-document.querySelector("#quote").addEventListener("click", async () => {
-  try {
-    const quote = await api("/api/quote");
-    quoteOut.hidden = false;
-    quoteOut.textContent = `${quote.text} — ${quote.source}`;
-    setStatus("Fetched quote over Vaab http.get.");
   } catch (error) {
     setStatus(error.message, "error");
   }

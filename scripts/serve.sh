@@ -10,9 +10,11 @@ if [[ ! -x "$VAAB_BIN" ]]; then
 fi
 
 mkdir -p "$ROOT/data"
-cd "$ROOT"
 
 export AUTH_SECRET="${AUTH_SECRET:-dev}"
 export DATABASE_URL="${DATABASE_URL:-sqlite:data/tasks.db}"
 
+cd "$ROOT/backend"
+"$VAAB_BIN" gather
+cd "$ROOT"
 exec "$VAAB_BIN" serve backend/main.vaab

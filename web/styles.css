@@ -44,8 +44,34 @@ h1 {
 
 .lede {
   margin: 0.75rem 0 0;
-  max-width: 34ch;
+  max-width: 42ch;
   color: rgba(26, 36, 33, 0.72);
+}
+
+.architecture h2 {
+  margin: 0 0 0.75rem;
+  font-family: "Fraunces", serif;
+  font-size: 1.05rem;
+  font-weight: 600;
+}
+
+.tree {
+  list-style: none;
+  margin: 0;
+  padding: 0.85rem 1rem;
+  border-radius: 0.35rem;
+  background: rgba(255, 255, 255, 0.55);
+  border: 1px solid var(--line);
+  font-size: 0.85rem;
+  line-height: 1.55;
+}
+
+.tree li + li { margin-top: 0.35rem; }
+
+.tree code {
+  font-family: ui-monospace, "SF Mono", monospace;
+  font-size: 0.82em;
+  color: var(--moss-deep);
 }
 
 section {
@@ -128,11 +154,35 @@ li {
 li strong { font-weight: 500; }
 li span { font-size: 0.8rem; color: rgba(26, 36, 33, 0.55); }
 
-#quote-out {
+.quote-actions {
+  display: flex;
+  gap: 0.75rem;
+  align-items: center;
+}
+
+#quote-flight {
+  font-size: 0.85rem;
+  color: rgba(26, 36, 33, 0.55);
+}
+
+.quote-feed {
+  list-style: none;
   margin: 1rem 0 0;
-  padding: 1rem;
-  border-left: 3px solid var(--clay);
-  background: rgba(255, 255, 255, 0.45);
+  padding: 0;
+  max-height: 16rem;
+  overflow: auto;
+}
+
+.quote-feed li {
+  animation: rise 180ms ease both;
+}
+
+.quote-feed li strong {
+  display: block;
+}
+
+#quote:active {
+  transform: scale(0.98);
 }
 
 #status {
